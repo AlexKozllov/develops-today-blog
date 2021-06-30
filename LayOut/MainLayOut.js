@@ -10,11 +10,11 @@ export function MainLayout({ children }) {
         <Link href="/">
           <a className={s["navigationLink"]}>Main</a>
         </Link>
-        <Link href="/auth">
-          <a className={s["navigationLink"]}>Auth</a>
+        <Link href="/posts">
+          <a className={s["navigationLink"]}>Posts</a>
         </Link>
-        <Link href="/users">
-          <a className={s["navigationLink"]}>Users</a>
+        <Link href="/posts/new">
+          <a className={s["navigationLink"]}>Create Post</a>
         </Link>
       </nav>
       <main className={s.container}>{children}</main>
