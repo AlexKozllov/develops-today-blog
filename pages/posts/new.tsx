@@ -1,9 +1,52 @@
-import { MainLayout } from "../../LayOut/mainLayout";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { MainLayout } from "../../LayOut/MainLayout";
+import { addPost } from "../../redux/operations/blogOperations";
+import { useAppDispatch } from "../../redux/store";
 
+const initialState = { title: "", body: "" };
 const createMessage = () => {
+  const dispatch = useAppDispatch();
+  const [newPost, setNewPost] = useState(initialState);
+
+  const onInputHandler = (e) => {
+    const { name, value } = e.target;
+    // @ts-ignore: Unreachable code error
+    setNewPost({ ...newPost, [name]: value });
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(addPost(newPost));
+    setNewPost({ ...initialState });
+  };
   return (
     <MainLayout>
-      <h2>Create Post</h2>
+      <form onSubmit={onSubmitHandler}>
+        <div>
+          <label>
+            <span>Title</span>
+            <input
+              type="text"
+              name="title"
+              value={newPost.title}
+              onChange={onInputHandler}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Message</span>
+            <input
+              type="text"
+              name="body"
+              value={newPost.body}
+              onChange={onInputHandler}
+            />
+          </label>
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
     </MainLayout>
   );
 };

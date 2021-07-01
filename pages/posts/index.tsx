@@ -1,4 +1,4 @@
-import { MainLayout } from "../../LayOut/mainLayout";
+import { MainLayout } from "../../LayOut/MainLayout";
 import s from "./users.module.scss";
 
 export default function Users() {

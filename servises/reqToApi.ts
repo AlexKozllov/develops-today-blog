@@ -24,9 +24,9 @@ const getRetrivePost = async (postId) => {
   }
 };
 
-const postCreatePost = async (postId) => {
+const postCreatePost = async (massage) => {
   try {
-    const response = await axios.post(`/posts`);
+    const response = await axios.post(`/posts`, massage);
     console.log(response.data);
     return await response.data;
   } catch (error) {

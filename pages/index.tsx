@@ -9,20 +9,30 @@ import {
   postCreatePost,
   putUpdatePost,
 } from "../servises/reqToApi";
-import { getAllPosts } from "../redux/operations/blogOperations";
-import { useDispatch, useSelector } from "react-redux";
+import { drlrtePost, getAllPosts } from "../redux/operations/blogOperations";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
+// import { RootState } from "app/redux/store";
 import { useEffect } from "react";
-import { store } from "../redux/store";
+import store, { useAppDispatch } from "../redux/store";
+import { getAllPostsSuccess } from "../redux/actions/blogAction";
 // import { store } from "../redux/store";
+interface RootState {
+  blog: { postList: string[] };
+}
 
+export default function Home({ getedPosts }) {
+  const dispatch = useAppDispatch();
 
-export default function Home({ postList }) {
-  // const dispatch = useDispatch();
+  useEffect(() => {
+    // dispatch(getAllPostsSuccess(getedPosts));
+  }, []);
+  const postList = useSelector((state: RootState) => state.blog.postList);
+  console.log("postList: ", postList);
 
-  // const postList = useSelector((state) => state.blog.postList);
-  // useEffect(() => {
-  //   dispatch(getAllPosts());
-  // }, []);
+  const onDeleteHandler = (e) => {
+    const { postid } = e.target.dataset;
+    dispatch(drlrtePost(postid));
+  };
 
   return (
     <MainLayout>
@@ -32,39 +42,39 @@ export default function Home({ postList }) {
         <a>User 555</a>
       </Link>
       <ul>
-        {postList.map((item) => (
-          <li key={item.id}>
-            <Link href="/posts/[postId]" as={`/posts/${item.id}`}>
-              <a>
-                <b>{item.title}</b>
-                <p>{item.body}</p>
-              </a>
-            </Link>
-          </li>
-        ))}
+        {postList.length &&
+          postList.map((item: any) => (
+            <li key={item.id}>
+              <Link href="/posts/[postId]" as={`/posts/${item.id}`}>
+                <a>
+                  <b>{item.title}</b>
+                  <p>{item.body}</p>
+                </a>
+              </Link>
+              <button onClick={onDeleteHandler} data-postid={item.id}>
+                Delete post
+              </button>
+            </li>
+          ))}
       </ul>
     </MainLayout>
   );
 }
 
-export const getStaticProps = async (context) => {
-  console.log("context: ", context);
-  // const dispatch = useDispatch();
-  const postList = await store.dispatch(getAllPosts())
-  console.log('store: ', await store.dispatch(getAllPosts()));
-  console.log('postList: ', postList);
+// export const getStaticProps = async (context) => {
+//   console.log("context: ", context);
+//   // const dispatch = useDispatch();
+//   const getedPosts = await getBlogList();
+//   // console.log('store: ', await store.dispatch(getAllPosts()));
+//   // console.log('postList: ', postList);
 
-  // const postList = await context.store(getAllPosts());
-  // const postList = await getAllPosts();
-  // const postList = await getBlogList()
+//   // const postList = await context.store(getAllPosts());
+//   // const postList = await getAllPosts();
+//   // const postList = await getBlogList()
 
+//   // return { props: { initialReduxState: reduxStore.getState() } };
 
-
-
-
-  // return { props: { initialReduxState: reduxStore.getState() } };
-
-  return {
-    props: { postList },
-  };
-};
+//   return {
+//     props: { getedPosts },
+//   };
+// };

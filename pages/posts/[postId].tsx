@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Router from "next/router";
 
-import { MainLayout } from "../../LayOut/mainLayout";
+import { MainLayout } from "../../LayOut/MainLayout";
 import { getRetrivePost } from "../../servises/reqToApi";
 
 export default function Post({ curentPost }) {

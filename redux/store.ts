@@ -1,4 +1,5 @@
-import { MakeStore } from 'next-redux-wrapper';
+import { useDispatch } from "react-redux";
+import { MakeStore } from "next-redux-wrapper";
 
 import {
   configureStore,
@@ -6,9 +7,7 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 
-
 import { combineReducers } from "redux";
-
 
 // import {
 //   FLUSH,
@@ -27,13 +26,13 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware({
-    // serializableCheck: {
-    //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    // },
-  }),
 });
 
-// export type RootState = ReturnType<typeof rootReducer>
-// export const makeStore: MakeStore = (_?: RootState): EnhancedStore => store
-export { store };
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+// export type RootState = ReturnType<typeof rootReducer>;
+
+// export type RootState = ReturnType<typeof store.getState>;
+
+export default store;
