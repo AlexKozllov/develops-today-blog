@@ -1,6 +1,6 @@
 import Router from "next/router";
 import { useState } from "react";
-import { MainLayout } from "../Layout/MainLayout";
+import { MainLayout } from "../LayOut/MainLayout";
 
 const initialState = {
   name: "Alex",

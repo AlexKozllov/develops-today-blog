@@ -1,4 +1,4 @@
-import { getBlogList, getMethods } from "../../servises/reqToApi";
+import { getBlogList } from "../../servises/reqToApi";
 import {
   getAllPostsRequest,
   getAllPostsSuccess,

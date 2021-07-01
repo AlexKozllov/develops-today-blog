@@ -2,11 +2,11 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://simple-blog-api.crew.red";
 
-const getBlogList = async (user) => {
+const getBlogList = async () => {
   try {
     const response = await axios.get("/posts");
     console.log(response.data);
-    return await response.data;
+    return response.data;
   } catch (error) {
     console.log("error", error);
     throw error;

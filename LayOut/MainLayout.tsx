@@ -5,7 +5,7 @@ import s from "./MainLayOut.module.scss";
 export function MainLayout({ children }) {
   return (
     <>
-      <Head></Head>
+      {/* <Head></Head> */}
       <nav className={s.navigation}>
         <Link href="/">
           <a className={s["navigationLink"]}>Main</a>
