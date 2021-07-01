@@ -13,7 +13,7 @@ import { drlrtePost, getAllPosts } from "../redux/operations/blogOperations";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 // import { RootState } from "app/redux/store";
 import { useEffect } from "react";
-import store, { useAppDispatch } from "../redux/store";
+// import store, { useAppDispatch } from "../redux/store";
 import { getAllPostsSuccess } from "../redux/actions/blogAction";
 // import { store } from "../redux/store";
 interface RootState {
@@ -21,7 +21,7 @@ interface RootState {
 }
 
 export default function Home({ getedPosts }) {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // dispatch(getAllPostsSuccess(getedPosts));

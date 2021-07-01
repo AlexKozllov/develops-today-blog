@@ -2,11 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { MainLayout } from "../../LayOut/MainLayout";
 import { addPost } from "../../redux/operations/blogOperations";
-import { useAppDispatch } from "../../redux/store";
 
 const initialState = { title: "", body: "" };
 const createMessage = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [newPost, setNewPost] = useState(initialState);
 
   const onInputHandler = (e) => {
