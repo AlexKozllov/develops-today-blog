@@ -1,21 +1,7 @@
-import {
-  configureStore,
-  createSlice,
-  getDefaultMiddleware,
-  ThunkAction,
-} from "@reduxjs/toolkit";
+import { configureStore, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import { Action } from "redux";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { blogReduser } from "../redux/reducers/blogReducer";
-import { getAllPosts } from "./operations/blogOperations";
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-} from "redux-persist/es/constants";
 
 export const postSlice = createSlice({
   name: "blogReduser",
@@ -42,7 +28,6 @@ export const postSlice = createSlice({
 const makeStore = () =>
   configureStore({
     reducer: {
-      // [postSlice.name]: postSlice.reducer,
       blogReduser,
     },
 
@@ -65,7 +50,6 @@ export const fetchSubject =
       new Promise((resolve) => setTimeout(resolve, timeout));
 
     await timeoutPromise(200);
-    // dispatch(getAllPosts());
     dispatch(
       postSlice.actions.setEnt({
         [id]: {

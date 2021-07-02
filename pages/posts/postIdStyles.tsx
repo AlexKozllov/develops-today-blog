@@ -21,7 +21,6 @@ const PostStyles = styled.div`
   }
   & .comentsList {
     width: 600px;
-    /* min-height: 50px; */
     margin-left: 50px;
     display: flex;
     flex-direction: column;
@@ -38,7 +37,6 @@ const PostStyles = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* transition: box-shadow 0.2s ease-in-out; */
   }
 `;
 
@@ -78,6 +76,7 @@ const UpdateformStyles = styled.form`
     background-color: #0e0ef3;
     color: #fff;
     font-size: 20px;
+    transition: box-shadow 0.2s ease-in-out;
     :hover {
       box-shadow: 1px 1px 5px 1px rgba(245, 68, 15, 0.822);
       transition: box-shadow 0.2s ease-in-out;
@@ -114,6 +113,7 @@ const CreateCommentStyles = styled.form`
     background-color: #0e0ef3;
     color: #fff;
     font-size: 20px;
+    transition: box-shadow 0.2s ease-in-out;
     :hover {
       box-shadow: 1px 1px 5px 1px rgba(245, 68, 15, 0.822);
       transition: box-shadow 0.2s ease-in-out;
@@ -122,7 +122,6 @@ const CreateCommentStyles = styled.form`
 `;
 
 const DelettedButton = styled.button`
-  /* padding: 30px; */
   font-family: Roboto;
   margin: 0 auto;
   margin-bottom: 40px;
@@ -132,6 +131,7 @@ const DelettedButton = styled.button`
   background-color: #f30e0e;
   color: #fff;
   font-size: 20px;
+  transition: box-shadow 0.2s ease-in-out;
   :hover {
     box-shadow: 1px 1px 5px 1px rgba(15, 19, 245, 0.822);
     transition: box-shadow 0.2s ease-in-out;

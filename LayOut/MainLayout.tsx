@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { NavBar, NavigatorLink, MainWrapper } from "./mainLayoutStyles";
-// import s from "./MainLayOut.module.scss";
 
 export function MainLayout({ children }) {
   return (
     <>
-      {/* <Head></Head> */}
       <NavBar>
         <li>
           <Link href="/" passHref>

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { wrapper } from "../redux/store";
 import { useEffect } from "react";
-import { getBlogList } from "../servises/reqToApi";
 
 import { PostsList, PostsListItem } from "./postsStyles";
 interface RootState {
@@ -53,36 +52,8 @@ export default function Home({ posts: serverPosts }) {
 Home.getInitialProps = wrapper.getInitialPageProps(
   (store) =>
     async ({ pathname, req, res }) => {
-      // if (!req) {
-      //   return { posts: null };
-      // }
       console.log("2. Page.getInitialProps uses the store to dispatch things");
       const posts = await store.dispatch(getAllPosts());
       return { posts };
     }
 );
-
-// Home.getInitialProps = async (ctx) => {
-//   if (!ctx.req) {
-//     return { posts: null };
-//   }
-//   const posts = await getBlogList();
-
-//   return { posts };
-// };
-
-// export async function getServerSideProps({ qery, req }) {
-//   // if (!req) {
-//   //   return { posts: null };
-//   // }
-//   const posts = await getBlogList();
-
-//   if (!posts) {
-//     return {
-//       posts: null,
-//     };
-//   }
-//   return {
-//     props: { posts }, // will be passed to the page component as props
-//   };
-// }

@@ -3,9 +3,7 @@ import {
   getAllPostsRequest,
   getAllPostsSuccess,
   getAllPostsError,
-  getCurrentRequest,
   getCurrentSuccess,
-  getCurrentError,
   postCreatePostRequest,
   postCreatePostSuccess,
   postCreatePostError,
@@ -15,9 +13,7 @@ import {
   updatePostRequest,
   updatePostSuccess,
   updatePostError,
-  createCommentRequest,
   createCommentSuccess,
-  createCommentError,
 } from "../actions/blogAction";
 
 const initialList = [];
@@ -36,7 +32,7 @@ const initialPost = {
 
 const postList = createReducer(initialList, {
   [getAllPostsSuccess.type]: (state, { payload }) => [...payload],
-  [postCreatePostSuccess.type]: (state, { payload }) => [...state, ...payload],
+  [postCreatePostSuccess.type]: (state, { payload }) => [...payload, ...state],
   [deletePostSuccess.type]: (state, { payload }) => {
     return [...state.filter((item) => item.id !== +payload)];
   },

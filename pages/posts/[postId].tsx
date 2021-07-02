@@ -10,12 +10,8 @@ import {
   updatePost,
 } from "../../redux/operations/blogOperations";
 import { useState } from "react";
-import { wrapper } from "../../redux/store";
 import { useEffect } from "react";
-import {
-  createCommentSuccess,
-  getCurrentSuccess,
-} from "../../redux/actions/blogAction";
+import { getCurrentSuccess } from "../../redux/actions/blogAction";
 import {
   PostStyles,
   UpdateformStyles,
@@ -62,7 +58,7 @@ export default function Post({ curentPost }) {
   };
 
   const commentInputhandler = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setComment(value);
   };
 
@@ -70,9 +66,6 @@ export default function Post({ curentPost }) {
     e.preventDefault();
     const { postId } = router.query;
     dispatch(createComment(postId, comment));
-
-    // setUpdateValue("");
-    // Router.push("/");
   };
 
   const { title, body, comments } = currentStorPost;
@@ -154,16 +147,3 @@ export const getServerSideProps = async (context) => {
     props: { curentPost },
   };
 };
-
-// Post.getInitialProps = wrapper.getInitialPageProps(
-//   (store) =>
-//     async ({ query, req, res }) => {
-//       console.log("pathname: ", query);
-//       // if (!req) {
-//       //   return { posts: null };
-//       // }
-
-//       const curentPost = await store.dispatch(getRetrivePost(query.postId));
-//       return { curentPost };
-//     }
-// );
