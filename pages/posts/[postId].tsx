@@ -17,7 +17,7 @@ import {
   UpdateformStyles,
   CreateCommentStyles,
   DelettedButton,
-} from "./postIdStyles";
+} from "../../styles/postIdStyles";
 
 interface RootState {
   blogReduser: { currentPost: any };

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { MainLayout } from "../../LayOut/MainLayout";
 import { addPost } from "../../redux/operations/blogOperations";
 import Router from "next/router";
-import { AddFormstyles } from "./newstyles";
+import { AddFormstyles } from "../../styles/newstyles";
 
 const initialState = { title: "", body: "" };
 const CreateMessage = () => {

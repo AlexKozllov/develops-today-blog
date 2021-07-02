@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { wrapper } from "../redux/store";
 import { useEffect } from "react";
 
-import { PostsList, PostsListItem } from "./postsStyles";
+import { PostsList, PostsListItem } from "../styles/postsStyles";
 interface RootState {
   blogReduser: { postList: string[] };
 }
