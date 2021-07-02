@@ -17,8 +17,8 @@ const postList = createReducer(initialList, {
   [getAllPostsSuccess.type]: (state, { payload }) => [...payload],
   [postCreatePostSuccess.type]: (state, { payload }) => [...state, ...payload],
   [deletePostSuccess.type]: (state, { payload }) => {
-    console.log(`payload`, payload);
-    return [...state.filter((item) => item.id !== payload)];
+    console.log(`payload`, +payload);
+    return [...state.filter((item) => item.id !== +payload)];
   },
 });
 

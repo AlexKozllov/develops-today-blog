@@ -1,11 +1,13 @@
 import { configureStore, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import { Action } from "redux";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { blogReduser } from "../redux/reducers/blogReducer";
+import { getAllPosts } from "./operations/blogOperations";
 
-export const subjectSlice = createSlice({
-  name: "subject",
+export const postSlice = createSlice({
+  name: "allPosts",
 
-  initialState: {} as any,
+  initialState: [] as any,
 
   reducers: {
     setEnt(state, action) {
@@ -27,7 +29,8 @@ export const subjectSlice = createSlice({
 const makeStore = () =>
   configureStore({
     reducer: {
-      [subjectSlice.name]: subjectSlice.reducer,
+      [postSlice.name]: postSlice.reducer,
+      blogReduser,
     },
     devTools: true,
   });
@@ -48,9 +51,9 @@ export const fetchSubject =
       new Promise((resolve) => setTimeout(resolve, timeout));
 
     await timeoutPromise(200);
-
+    // dispatch(getAllPosts());
     dispatch(
-      subjectSlice.actions.setEnt({
+      postSlice.actions.setEnt({
         [id]: {
           id,
           name: `Subject ${id}`,
@@ -62,4 +65,4 @@ export const fetchSubject =
 export const wrapper = createWrapper<AppStore>(makeStore);
 
 export const selectSubject = (id: any) => (state: AppState) =>
-  state?.[subjectSlice.name]?.[id];
+  state?.[postSlice.name]?.[id];

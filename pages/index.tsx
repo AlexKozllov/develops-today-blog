@@ -15,18 +15,21 @@ import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 // import store, { useAppDispatch } from "../redux/store";
 import { getAllPostsSuccess } from "../redux/actions/blogAction";
+import { wrapper } from "../redux/store";
 // import { store } from "../redux/store";
 interface RootState {
-  blog: { postList: string[] };
+  blogReduser: { postList: string[] };
 }
 
 export default function Home({ getedPosts }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(getAllPostsSuccess(getedPosts));
-  }, []);
-  const postList = useSelector((state: RootState) => state.blog.postList);
+  // useEffect(() => {
+  //   dispatch(getAllPosts());
+  // }, []);
+  const postList = useSelector(
+    (state: RootState) => state.blogReduser.postList
+  );
   console.log("postList: ", postList);
 
   const onDeleteHandler = (e) => {
@@ -61,6 +64,20 @@ export default function Home({ getedPosts }) {
   );
 }
 
+Home.getInitialProps = wrapper.getInitialPageProps(
+  (store) =>
+    async ({ pathname, req, res }) => {
+      console.log("2. Page.getInitialProps uses the store to dispatch things");
+      const data = await store.dispatch(getAllPosts());
+      return { props: data };
+    }
+);
+
+// Home.getInitialProps = async (ctx) => {
+//   const res = useDispatch(getAllPosts());
+
+//   return { props: res };
+// };
 // export const getStaticProps = async (context) => {
 //   console.log("context: ", context);
 //   // const dispatch = useDispatch();
