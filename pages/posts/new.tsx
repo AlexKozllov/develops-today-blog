@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { MainLayout } from "../../LayOut/MainLayout";
 import { addPost } from "../../redux/operations/blogOperations";
 import Router from "next/router";
+import { AddFormstyles } from "./newstyles";
 
 const initialState = { title: "", body: "" };
 const CreateMessage = () => {
@@ -23,11 +24,12 @@ const CreateMessage = () => {
   };
   return (
     <MainLayout>
-      <form onSubmit={onSubmitHandler}>
+      <AddFormstyles onSubmit={onSubmitHandler}>
         <div>
           <label>
             <span>Title</span>
             <input
+              className="inputTitle"
               type="text"
               name="title"
               value={newPost.title}
@@ -38,16 +40,16 @@ const CreateMessage = () => {
         <div>
           <label>
             <span>Message</span>
-            <input
-              type="text"
+            <textarea
+              className="inputBody"
               name="body"
               value={newPost.body}
               onChange={onInputHandler}
             />
           </label>
         </div>
-        <input type="submit" value="Submit" />
-      </form>
+        <input className="addSubmit" type="submit" value="Submit" />
+      </AddFormstyles>
     </MainLayout>
   );
 };

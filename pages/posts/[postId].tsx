@@ -16,7 +16,12 @@ import {
   createCommentSuccess,
   getCurrentSuccess,
 } from "../../redux/actions/blogAction";
-import { Title } from "./postIdStyles";
+import {
+  PostStyles,
+  UpdateformStyles,
+  CreateCommentStyles,
+  DelettedButton,
+} from "./postIdStyles";
 
 interface RootState {
   blogReduser: { currentPost: any };
@@ -73,54 +78,70 @@ export default function Post({ curentPost }) {
   const { title, body, comments } = currentStorPost;
   return (
     <MainLayout>
-      <Title>
-        <p>{title}</p>
-        <p>{body}</p>
-        <ul>
-          {comments.map((item) => (
-            <li key={item.id}>
-              <p>{item.body}</p>
-            </li>
-          ))}
-        </ul>
-      </Title>
-      <form onSubmit={updatePostHandler}>
-        <p>Update a post</p>
-        <label>
-          <span>New title</span>
+      <PostStyles>
+        <h2>{title}</h2>
+        <p className="bodyPost">{body}</p>
+        <hr></hr>
+        {comments.length !== 0 ? (
+          <p className="commentHeader">Comments</p>
+        ) : (
+          <p className="commentHeader">Make your first comment.</p>
+        )}
+        {comments.length !== 0 && (
+          <ul className="comentsList">
+            {comments.map((item) => (
+              <li className="commentItem" key={item.id}>
+                <p>{item.body}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </PostStyles>
+      <UpdateformStyles onSubmit={updatePostHandler}>
+        <p className="updateHeader">Update a post</p>
+        <div className="updateWrapper">
+          <label>
+            <span>New title: </span>
+            <input
+              className="inputTitle"
+              type="text"
+              name="title"
+              value={updateValue.title}
+              onChange={updateInputhandler}
+            />
+          </label>
+          <label>
+            <span>New title: </span>
+            <textarea
+              className="inputBody"
+              name="body"
+              value={updateValue.body}
+              onChange={updateInputhandler}
+            />
+          </label>
+          <input className="updateSubmit" type="submit" value="Update" />
+        </div>
+      </UpdateformStyles>
+      <CreateCommentStyles onSubmit={commentHandler}>
+        <p className="commentHeader">Create a comment</p>
+        <div className="commentWrapper">
+          <label>
+            <span>Message</span>
+            <textarea
+              className="inputBody"
+              name="body"
+              value={comment}
+              onChange={commentInputhandler}
+            />
+          </label>
           <input
-            type="text"
-            name="title"
-            value={updateValue.title}
-            onChange={updateInputhandler}
+            className="commentSubmit"
+            type="submit"
+            value="Create a comment"
           />
-        </label>
-        <label>
-          <span>New title</span>
-          <input
-            type="text"
-            name="body"
-            value={updateValue.body}
-            onChange={updateInputhandler}
-          />
-        </label>
-        <input type="submit" value="Update" />
-      </form>
-      <form onSubmit={commentHandler}>
-        <p>Create a comment</p>
-
-        <label>
-          <span>Message</span>
-          <input
-            type="text"
-            name="body"
-            value={comment}
-            onChange={commentInputhandler}
-          />
-        </label>
-        <input type="submit" value="Create a comment" />
-      </form>
-      <button onClick={onDeleteHandler}>Delete post</button>
+        </div>
+      </CreateCommentStyles>
+      <DelettedButton onClick={onDeleteHandler}>Delete post</DelettedButton>
     </MainLayout>
   );
 }

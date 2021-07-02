@@ -8,6 +8,7 @@ import { wrapper } from "../redux/store";
 import { useEffect } from "react";
 import { getBlogList } from "../servises/reqToApi";
 
+import { PostsList, PostsListItem } from "./postsStyles";
 interface RootState {
   blogReduser: { postList: string[] };
 }
@@ -33,21 +34,18 @@ export default function Home({ posts: serverPosts }) {
 
   return (
     <MainLayout>
-      <ul>
+      <PostsList>
         {postList.map((item: any) => (
-          <li key={item.id}>
+          <PostsListItem key={item.id}>
             <Link href="/posts/[postId]" as={`/posts/${item.id}`}>
               <a>
-                <b>{item.title}</b>
+                <h3>{item.title}</h3>
                 <p>{item.body}</p>
               </a>
             </Link>
-            {/* <button onClick={onDeleteHandler} data-postid={item.id}>
-                Delete post
-              </button> */}
-          </li>
+          </PostsListItem>
         ))}
-      </ul>
+      </PostsList>
     </MainLayout>
   );
 }
