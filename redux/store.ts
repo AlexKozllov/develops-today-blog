@@ -5,7 +5,7 @@ import { blogReduser } from "../redux/reducers/blogReducer";
 import { getAllPosts } from "./operations/blogOperations";
 
 export const postSlice = createSlice({
-  name: "allPosts",
+  name: "blogReduser",
 
   initialState: [] as any,
 
@@ -29,7 +29,7 @@ export const postSlice = createSlice({
 const makeStore = () =>
   configureStore({
     reducer: {
-      [postSlice.name]: postSlice.reducer,
+      // [postSlice.name]: postSlice.reducer,
       blogReduser,
     },
     devTools: true,
@@ -44,23 +44,23 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action
 >;
 
-export const fetchSubject =
-  (id: any): AppThunk =>
-  async (dispatch) => {
-    const timeoutPromise = (timeout: number) =>
-      new Promise((resolve) => setTimeout(resolve, timeout));
+// export const fetchSubject =
+//   (id: any): AppThunk =>
+//   async (dispatch) => {
+//     const timeoutPromise = (timeout: number) =>
+//       new Promise((resolve) => setTimeout(resolve, timeout));
 
-    await timeoutPromise(200);
-    // dispatch(getAllPosts());
-    dispatch(
-      postSlice.actions.setEnt({
-        [id]: {
-          id,
-          name: `Subject ${id}`,
-        },
-      })
-    );
-  };
+//     await timeoutPromise(200);
+//     // dispatch(getAllPosts());
+//     dispatch(
+//       postSlice.actions.setEnt({
+//         [id]: {
+//           id,
+//           name: `Subject ${id}`,
+//         },
+//       })
+//     );
+//   };
 
 export const wrapper = createWrapper<AppStore>(makeStore);
 

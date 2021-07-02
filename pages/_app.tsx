@@ -11,7 +11,7 @@ const App = ({ Component, pageProps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllPosts());
+    // dispatch(getAllPosts());
   }, []);
   return <Component {...pageProps} />;
 };

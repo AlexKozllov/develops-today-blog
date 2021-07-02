@@ -1,64 +1,52 @@
-import Router from "next/router";
 import Link from "next/link";
 import { MainLayout } from "../LayOut/MainLayout";
-import {
-  deletePost,
-  getBlogList,
-  getRetrivePost,
-  postCreateComment,
-  postCreatePost,
-  putUpdatePost,
-} from "../servises/reqToApi";
-import { drlrtePost, getAllPosts } from "../redux/operations/blogOperations";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-// import { RootState } from "app/redux/store";
-import { useEffect } from "react";
-// import store, { useAppDispatch } from "../redux/store";
-import { getAllPostsSuccess } from "../redux/actions/blogAction";
+
+import { getAllPosts } from "../redux/operations/blogOperations";
+import { useDispatch, useSelector } from "react-redux";
+
 import { wrapper } from "../redux/store";
-// import { store } from "../redux/store";
+import { useEffect } from "react";
+import { getBlogList } from "../servises/reqToApi";
+
 interface RootState {
   blogReduser: { postList: string[] };
 }
 
-export default function Home({ getedPosts }) {
+export default function Home({ posts: serverPosts }) {
+  console.log("posts: ", serverPosts);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllPosts());
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllPosts());
+    const load = async () => {
+      dispatch(getAllPosts());
+    };
+    if (!serverPosts) {
+      load();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serverPosts]);
   const postList = useSelector(
     (state: RootState) => state.blogReduser.postList
   );
   console.log("postList: ", postList);
 
-  const onDeleteHandler = (e) => {
-    const { postid } = e.target.dataset;
-    dispatch(drlrtePost(postid));
-  };
-
   return (
     <MainLayout>
-      <h2>Home page</h2>
-
-      <Link href="/posts/555">
-        <a>User 555</a>
-      </Link>
       <ul>
-        {postList.length &&
-          postList.map((item: any) => (
-            <li key={item.id}>
-              <Link href="/posts/[postId]" as={`/posts/${item.id}`}>
-                <a>
-                  <b>{item.title}</b>
-                  <p>{item.body}</p>
-                </a>
-              </Link>
-              <button onClick={onDeleteHandler} data-postid={item.id}>
+        {postList.map((item: any) => (
+          <li key={item.id}>
+            <Link href="/posts/[postId]" as={`/posts/${item.id}`}>
+              <a>
+                <b>{item.title}</b>
+                <p>{item.body}</p>
+              </a>
+            </Link>
+            {/* <button onClick={onDeleteHandler} data-postid={item.id}>
                 Delete post
-              </button>
-            </li>
-          ))}
+              </button> */}
+          </li>
+        ))}
       </ul>
     </MainLayout>
   );
@@ -67,31 +55,36 @@ export default function Home({ getedPosts }) {
 Home.getInitialProps = wrapper.getInitialPageProps(
   (store) =>
     async ({ pathname, req, res }) => {
+      if (!req) {
+        return { posts: null };
+      }
       console.log("2. Page.getInitialProps uses the store to dispatch things");
-      const data = await store.dispatch(getAllPosts());
-      return { props: data };
+      const posts = await store.dispatch(getAllPosts());
+      return { posts };
     }
 );
 
 // Home.getInitialProps = async (ctx) => {
-//   const res = useDispatch(getAllPosts());
+//   if (!ctx.req) {
+//     return { posts: null };
+//   }
+//   const posts = await getBlogList();
 
-//   return { props: res };
+//   return { posts };
 // };
-// export const getStaticProps = async (context) => {
-//   console.log("context: ", context);
-//   // const dispatch = useDispatch();
-//   const getedPosts = await getBlogList();
-//   // console.log('store: ', await store.dispatch(getAllPosts()));
-//   // console.log('postList: ', postList);
 
-//   // const postList = await context.store(getAllPosts());
-//   // const postList = await getAllPosts();
-//   // const postList = await getBlogList()
+// export async function getServerSideProps({ qery, req }) {
+//   // if (!req) {
+//   //   return { posts: null };
+//   // }
+//   const posts = await getBlogList();
 
-//   // return { props: { initialReduxState: reduxStore.getState() } };
-
+//   if (!posts) {
+//     return {
+//       posts: null,
+//     };
+//   }
 //   return {
-//     props: { getedPosts },
+//     props: { posts }, // will be passed to the page component as props
 //   };
-// };
+// }

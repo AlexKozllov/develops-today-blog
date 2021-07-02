@@ -8,11 +8,9 @@ export function MainLayout({ children }) {
       {/* <Head></Head> */}
       <nav className={s.navigation}>
         <Link href="/">
-          <a className={s["navigationLink"]}>Main</a>
+          <a className={s["navigationLink"]}> Latest Posts</a>
         </Link>
-        <Link href="/posts">
-          <a className={s["navigationLink"]}>Posts</a>
-        </Link>
+       
         <Link href="/posts/new">
           <a className={s["navigationLink"]}>Create Post</a>
         </Link>

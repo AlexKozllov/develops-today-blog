@@ -3,12 +3,18 @@ import {
   getAllPostsRequest,
   getAllPostsSuccess,
   getAllPostsError,
+  getCurrentRequest,
+  getCurrentSuccess,
+  getCurrentError,
   postCreatePostRequest,
   postCreatePostSuccess,
   postCreatePostError,
   deletePostRequest,
   deletePostSuccess,
   deletePostError,
+  updatePostRequest,
+  updatePostSuccess,
+  updatePostError,
 } from "../actions/blogAction";
 
 const initialList = [];
@@ -17,8 +23,10 @@ const postList = createReducer(initialList, {
   [getAllPostsSuccess.type]: (state, { payload }) => [...payload],
   [postCreatePostSuccess.type]: (state, { payload }) => [...state, ...payload],
   [deletePostSuccess.type]: (state, { payload }) => {
-    console.log(`payload`, +payload);
     return [...state.filter((item) => item.id !== +payload)];
+  },
+  [updatePostSuccess.type]: (state, { payload }) => {
+    return [...state.filter((item) => item.id !== +payload), payload];
   },
 });
 
@@ -32,6 +40,9 @@ const loading = createReducer(false, {
   [deletePostRequest.type]: () => true,
   [deletePostSuccess.type]: () => false,
   [deletePostError.type]: () => false,
+  [updatePostRequest.type]: () => true,
+  [updatePostSuccess.type]: () => false,
+  [updatePostError.type]: () => false,
 });
 
 const error = createReducer(null, {
@@ -44,6 +55,9 @@ const error = createReducer(null, {
   [deletePostRequest.type]: () => "",
   [deletePostSuccess.type]: () => "",
   [deletePostError.type]: (_, { payload }) => payload,
+  [updatePostRequest.type]: () => "",
+  [updatePostSuccess.type]: () => "",
+  [updatePostError.type]: (_, { payload }) => payload,
 });
 
 const blogReduser = combineReducers({

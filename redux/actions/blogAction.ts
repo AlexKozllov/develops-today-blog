@@ -4,6 +4,10 @@ const getAllPostsRequest = createAction<number>("posts/getAllPostsRequest");
 const getAllPostsSuccess = createAction<number>("posts/getAllPostsSuccess");
 const getAllPostsError = createAction<number>("posts/getAllPostsError");
 
+const getCurrentRequest = createAction<number>("posts/getCurrentRequest");
+const getCurrentSuccess = createAction<number>("posts/getCurrentSuccess");
+const getCurrentError = createAction<number>("posts/getCurrentError");
+
 const postCreatePostRequest = createAction<number>(
   "posts/postCreatePostRequest"
 );
@@ -16,14 +20,24 @@ const deletePostRequest = createAction<number>("posts/deletePostRequest");
 const deletePostSuccess = createAction<number>("posts/deletePostSuccess");
 const deletePostError = createAction<number>("posts/deletePostError");
 
+const updatePostRequest = createAction<number>("posts/updatePostRequest");
+const updatePostSuccess = createAction<number>("posts/updatePostSuccess");
+const updatePostError = createAction<number>("posts/updatePostError");
+
 export {
   getAllPostsRequest,
   getAllPostsSuccess,
   getAllPostsError,
+  getCurrentRequest,
+  getCurrentSuccess,
+  getCurrentError,
   postCreatePostRequest,
   postCreatePostSuccess,
   postCreatePostError,
   deletePostRequest,
   deletePostSuccess,
   deletePostError,
+  updatePostRequest,
+  updatePostSuccess,
+  updatePostError,
 };

@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { MainLayout } from "../../LayOut/MainLayout";
 import { addPost } from "../../redux/operations/blogOperations";
+import Router from "next/router";
 
 const initialState = { title: "", body: "" };
-const createMessage = () => {
+const CreateMessage = () => {
   const dispatch = useDispatch();
   const [newPost, setNewPost] = useState(initialState);
 
@@ -18,6 +19,7 @@ const createMessage = () => {
     e.preventDefault();
     dispatch(addPost(newPost));
     setNewPost({ ...initialState });
+    Router.push("/");
   };
   return (
     <MainLayout>
@@ -50,4 +52,4 @@ const createMessage = () => {
   );
 };
 
-export default createMessage;
+export default CreateMessage;

@@ -2,17 +2,24 @@ import {
   deletePost,
   getBlogList,
   postCreatePost,
+  putUpdatePost,
 } from "../../servises/reqToApi";
 import {
   getAllPostsRequest,
   getAllPostsSuccess,
   getAllPostsError,
+  getCurrentRequest,
+  getCurrentSuccess,
+  getCurrentError,
   postCreatePostRequest,
   postCreatePostSuccess,
   postCreatePostError,
   deletePostRequest,
   deletePostSuccess,
   deletePostError,
+  updatePostRequest,
+  updatePostSuccess,
+  updatePostError,
 } from "../actions/blogAction";
 
 const getAllPosts = () => async (dispatch) => {
@@ -25,7 +32,16 @@ const getAllPosts = () => async (dispatch) => {
     dispatch(getAllPostsError(error));
   }
 };
+const getCurrentPosts = () => async (dispatch) => {
+  dispatch(getAllPostsRequest());
+  try {
+    const posts = await getBlogList();
 
+    dispatch(getAllPostsSuccess(posts));
+  } catch (error) {
+    dispatch(getAllPostsError(error));
+  }
+};
 const addPost = (massage) => async (dispatch) => {
   dispatch(postCreatePostRequest());
   try {
@@ -37,7 +53,7 @@ const addPost = (massage) => async (dispatch) => {
   }
 };
 
-const drlrtePost = (postId) => async (dispatch) => {
+const deleteCurrentPost = (postId) => async (dispatch) => {
   dispatch(deletePostRequest());
   try {
     const posts = await deletePost(postId);
@@ -48,4 +64,15 @@ const drlrtePost = (postId) => async (dispatch) => {
   }
 };
 
-export { getAllPosts, addPost, drlrtePost };
+const updatePost = (postId, message) => async (dispatch) => {
+  dispatch(updatePostRequest());
+  try {
+    const posts = await putUpdatePost(postId, message);
+
+    dispatch(updatePostSuccess(postId));
+  } catch (error) {
+    dispatch(updatePostError(error));
+  }
+};
+
+export { getAllPosts, getCurrentPosts, addPost, deleteCurrentPost, updatePost };
