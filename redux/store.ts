@@ -1,8 +1,21 @@
-import { configureStore, createSlice, ThunkAction } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  createSlice,
+  getDefaultMiddleware,
+  ThunkAction,
+} from "@reduxjs/toolkit";
 import { Action } from "redux";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { blogReduser } from "../redux/reducers/blogReducer";
 import { getAllPosts } from "./operations/blogOperations";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist/es/constants";
 
 export const postSlice = createSlice({
   name: "blogReduser",
@@ -32,6 +45,7 @@ const makeStore = () =>
       // [postSlice.name]: postSlice.reducer,
       blogReduser,
     },
+
     devTools: true,
   });
 
@@ -44,23 +58,23 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action
 >;
 
-// export const fetchSubject =
-//   (id: any): AppThunk =>
-//   async (dispatch) => {
-//     const timeoutPromise = (timeout: number) =>
-//       new Promise((resolve) => setTimeout(resolve, timeout));
+export const fetchSubject =
+  (id: any): AppThunk =>
+  async (dispatch) => {
+    const timeoutPromise = (timeout: number) =>
+      new Promise((resolve) => setTimeout(resolve, timeout));
 
-//     await timeoutPromise(200);
-//     // dispatch(getAllPosts());
-//     dispatch(
-//       postSlice.actions.setEnt({
-//         [id]: {
-//           id,
-//           name: `Subject ${id}`,
-//         },
-//       })
-//     );
-//   };
+    await timeoutPromise(200);
+    // dispatch(getAllPosts());
+    dispatch(
+      postSlice.actions.setEnt({
+        [id]: {
+          id,
+          name: `Subject ${id}`,
+        },
+      })
+    );
+  };
 
 export const wrapper = createWrapper<AppStore>(makeStore);
 

@@ -3,18 +3,39 @@ import Router from "next/router";
 
 import { MainLayout } from "../../LayOut/MainLayout";
 import { getRetrivePost } from "../../servises/reqToApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  createComment,
   deleteCurrentPost,
   updatePost,
 } from "../../redux/operations/blogOperations";
 import { useState } from "react";
+import { wrapper } from "../../redux/store";
+import { useEffect } from "react";
+import {
+  createCommentSuccess,
+  getCurrentSuccess,
+} from "../../redux/actions/blogAction";
+import { Title } from "./postIdStyles";
+
+interface RootState {
+  blogReduser: { currentPost: any };
+}
+
 const initialState = { title: "", body: "" };
 export default function Post({ curentPost }) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const [updateValue, setUpdateValue] = useState({ ...initialState });
+  const [comment, setComment] = useState("");
+  const currentStorPost = useSelector(
+    (state: RootState) => state.blogReduser.currentPost
+  );
+  useEffect(() => {
+    dispatch(getCurrentSuccess(curentPost));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onDeleteHandler = () => {
     const { postId } = router.query;
@@ -35,10 +56,24 @@ export default function Post({ curentPost }) {
     Router.push("/");
   };
 
-  const { title, body, comments } = curentPost;
+  const commentInputhandler = (e) => {
+    const { name, value } = e.target;
+    setComment(value);
+  };
+
+  const commentHandler = (e) => {
+    e.preventDefault();
+    const { postId } = router.query;
+    dispatch(createComment(postId, comment));
+
+    // setUpdateValue("");
+    // Router.push("/");
+  };
+
+  const { title, body, comments } = currentStorPost;
   return (
     <MainLayout>
-      <div>
+      <Title>
         <p>{title}</p>
         <p>{body}</p>
         <ul>
@@ -48,7 +83,7 @@ export default function Post({ curentPost }) {
             </li>
           ))}
         </ul>
-      </div>
+      </Title>
       <form onSubmit={updatePostHandler}>
         <p>Update a post</p>
         <label>
@@ -71,10 +106,25 @@ export default function Post({ curentPost }) {
         </label>
         <input type="submit" value="Update" />
       </form>
+      <form onSubmit={commentHandler}>
+        <p>Create a comment</p>
+
+        <label>
+          <span>Message</span>
+          <input
+            type="text"
+            name="body"
+            value={comment}
+            onChange={commentInputhandler}
+          />
+        </label>
+        <input type="submit" value="Create a comment" />
+      </form>
       <button onClick={onDeleteHandler}>Delete post</button>
     </MainLayout>
   );
 }
+
 export const getServerSideProps = async (context) => {
   const { postId } = context.query;
   const curentPost = await getRetrivePost(postId);
@@ -83,3 +133,16 @@ export const getServerSideProps = async (context) => {
     props: { curentPost },
   };
 };
+
+// Post.getInitialProps = wrapper.getInitialPageProps(
+//   (store) =>
+//     async ({ query, req, res }) => {
+//       console.log("pathname: ", query);
+//       // if (!req) {
+//       //   return { posts: null };
+//       // }
+
+//       const curentPost = await store.dispatch(getRetrivePost(query.postId));
+//       return { curentPost };
+//     }
+// );

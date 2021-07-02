@@ -1,6 +1,7 @@
 import {
   deletePost,
   getBlogList,
+  postCreateComment,
   postCreatePost,
   putUpdatePost,
 } from "../../servises/reqToApi";
@@ -20,6 +21,9 @@ import {
   updatePostRequest,
   updatePostSuccess,
   updatePostError,
+  createCommentRequest,
+  createCommentSuccess,
+  createCommentError,
 } from "../actions/blogAction";
 
 const getAllPosts = () => async (dispatch) => {
@@ -75,4 +79,22 @@ const updatePost = (postId, message) => async (dispatch) => {
   }
 };
 
-export { getAllPosts, getCurrentPosts, addPost, deleteCurrentPost, updatePost };
+const createComment = (postId, message) => async (dispatch) => {
+  dispatch(createCommentRequest());
+  try {
+    const comment = await postCreateComment(postId, message);
+
+    dispatch(createCommentSuccess(comment));
+  } catch (error) {
+    dispatch(createCommentError(error));
+  }
+};
+
+export {
+  getAllPosts,
+  getCurrentPosts,
+  addPost,
+  deleteCurrentPost,
+  updatePost,
+  createComment,
+};

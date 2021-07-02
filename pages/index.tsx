@@ -55,9 +55,9 @@ export default function Home({ posts: serverPosts }) {
 Home.getInitialProps = wrapper.getInitialPageProps(
   (store) =>
     async ({ pathname, req, res }) => {
-      if (!req) {
-        return { posts: null };
-      }
+      // if (!req) {
+      //   return { posts: null };
+      // }
       console.log("2. Page.getInitialProps uses the store to dispatch things");
       const posts = await store.dispatch(getAllPosts());
       return { posts };

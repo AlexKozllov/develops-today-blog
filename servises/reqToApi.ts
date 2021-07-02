@@ -57,8 +57,10 @@ const postCreateComment = async (postId, message) => {
     postId,
     body: message,
   };
+
   try {
     const response = await axios.post(`/comments`, newComment);
+    console.log(`response.data`, response.data);
     return await response.data;
   } catch (error) {
     console.log("error", error);

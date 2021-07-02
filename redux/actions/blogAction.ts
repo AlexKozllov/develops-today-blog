@@ -24,6 +24,10 @@ const updatePostRequest = createAction<number>("posts/updatePostRequest");
 const updatePostSuccess = createAction<number>("posts/updatePostSuccess");
 const updatePostError = createAction<number>("posts/updatePostError");
 
+const createCommentRequest = createAction<number>("posts/createCommentRequest");
+const createCommentSuccess = createAction<number>("posts/createCommentSuccess");
+const createCommentError = createAction<number>("posts/createCommentError");
+
 export {
   getAllPostsRequest,
   getAllPostsSuccess,
@@ -40,4 +44,7 @@ export {
   updatePostRequest,
   updatePostSuccess,
   updatePostError,
+  createCommentRequest,
+  createCommentSuccess,
+  createCommentError,
 };

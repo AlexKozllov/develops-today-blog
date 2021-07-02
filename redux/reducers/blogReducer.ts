@@ -15,9 +15,24 @@ import {
   updatePostRequest,
   updatePostSuccess,
   updatePostError,
+  createCommentRequest,
+  createCommentSuccess,
+  createCommentError,
 } from "../actions/blogAction";
 
 const initialList = [];
+const initialPost = {
+  id: 0,
+  title: "",
+  body: "",
+  comments: [
+    {
+      id: 1,
+      postId: 0,
+      body: "",
+    },
+  ],
+};
 
 const postList = createReducer(initialList, {
   [getAllPostsSuccess.type]: (state, { payload }) => [...payload],
@@ -28,6 +43,14 @@ const postList = createReducer(initialList, {
   [updatePostSuccess.type]: (state, { payload }) => {
     return [...state.filter((item) => item.id !== +payload), payload];
   },
+});
+
+const currentPost = createReducer(initialPost, {
+  [getCurrentSuccess.type]: (state, { payload }) => ({ ...payload }),
+  [createCommentSuccess.type]: (state, { payload }) => ({
+    ...state,
+    comments: [...state.comments, payload],
+  }),
 });
 
 const loading = createReducer(false, {
@@ -62,6 +85,7 @@ const error = createReducer(null, {
 
 const blogReduser = combineReducers({
   postList,
+  currentPost,
   error,
   loading,
 });
